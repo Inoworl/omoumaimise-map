@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "615582581449",
+    "project_id": "omoumaimise-map-dev",
+    "storage_bucket": "omoumaimise-map-dev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:615582581449:android:42155e3d8758868a210318",
+        "android_client_info": {
+          "package_name": "jp.keishimizu26629.omoumaimise_map.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "615582581449-n7n2pprsdagdjj0156q023b9d3e6imle.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDf87fd1Z2olT8fJ4Uiza8oJvM7YPCyr9I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "615582581449-n7n2pprsdagdjj0156q023b9d3e6imle.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
