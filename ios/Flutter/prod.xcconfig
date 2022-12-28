@@ -1,0 +1,4 @@
+FLUTTER_FLAVOR=prod
+PRODUCT_BUNDLE_IDENTIFIER=jp.keishimizu26629.omoumaimise-map
+DISPLAY_NAME=omoumaimise-map
+FLUTTER_TARGET=lib/main.dart
