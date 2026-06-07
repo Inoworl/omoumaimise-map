@@ -63,7 +63,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '270166447520',
     projectId: 'omoumaimise-map-prod',
     storageBucket: 'omoumaimise-map-prod.appspot.com',
-    iosClientId: '270166447520-i46tovadrjnp0r6buo6p7ajftbchlnid.apps.googleusercontent.com',
+    iosClientId:
+        '270166447520-i46tovadrjnp0r6buo6p7ajftbchlnid.apps.googleusercontent.com',
     iosBundleId: 'jp.keishimizu26629.omoumaimise-map',
   );
 }

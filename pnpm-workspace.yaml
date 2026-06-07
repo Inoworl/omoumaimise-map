@@ -1,0 +1,3 @@
+packages:
+  - apps/public_web_nuxt
+  - packages/ts_common

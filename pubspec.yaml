@@ -1,22 +1,8 @@
-name: omoumaimise_map
-description: A new Flutter project.
+name: omoumaimise_map_workspace
 publish_to: 'none'
-version: 1.0.0+1
+
 environment:
-  sdk: '>=2.18.2 <3.0.0'
-dependencies:
-  cupertino_icons: ^1.0.2
-  firebase_auth: ^3.11.2
-  firebase_core: ^1.24.0
-  flutter:
-    sdk: flutter
-  intl: ^0.17.0
-  pedantic_mono: any
+  sdk: '>=3.7.0 <4.0.0'
 
 dev_dependencies:
-  flutter_lints: ^2.0.0
-  flutter_test:
-    sdk: flutter
-
-flutter:
-  uses-material-design: true
+  melos: ^3.4.0

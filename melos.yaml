@@ -1,0 +1,17 @@
+name: omoumaimise_map_workspace
+
+packages:
+  - apps/mobile_flutter
+  - packages/**
+
+command:
+  bootstrap:
+    usePubspecOverrides: true
+
+scripts:
+  analyze:flutter:
+    run: melos exec --scope="omoumaimise_map" -- flutter analyze
+    description: Analyze the Flutter mobile app.
+  test:flutter:
+    run: melos exec --scope="omoumaimise_map" -- flutter test
+    description: Run Flutter widget tests.

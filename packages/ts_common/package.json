@@ -1,0 +1,10 @@
+{
+  "name": "@omoumai/ts-common",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "scripts": {
+    "lint": "echo \"No TypeScript lint configured yet\"",
+    "typecheck": "echo \"No TypeScript typecheck configured yet\""
+  }
+}
