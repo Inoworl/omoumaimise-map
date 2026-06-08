@@ -1,4 +1,4 @@
-package jp.keishimizu26629.omoumaimise_map
+package com.inoworl.omoumaimise
 
 import io.flutter.embedding.android.FlutterActivity
 

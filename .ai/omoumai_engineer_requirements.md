@@ -17,7 +17,7 @@
 | 領域 | 方針 |
 | --- | --- |
 | クライアント | Flutter |
-| API/DB | Supabase(PostgreSQL) もしくは Firebase + Cloud Functions |
+| API/DB | Supabase(PostgreSQL) |
 | 地図 | Google Maps SDK または Mapbox |
 | 画像保存 | Supabase Storage / Firebase Storage |
 | 分析 | Firebase Analytics または PostHog |
@@ -48,7 +48,10 @@ Firebase併用方針:
 - Push通知が必要になった場合は Firebase Cloud Messaging を利用する
 - 分析、クラッシュ収集、機能フラグが必要になった場合は Firebase Analytics、Crashlytics、Remote Config を候補にする
 - App Distribution は基本的にアプリ内Firebase SDKを必須としないが、FCM、Analytics、Crashlytics、Remote Configを使う場合はFlutterアプリ内にFirebase SDKを導入する
-- 既存の `firebase_options_dev.dart` / `firebase_options_prod.dart` は削除せず、Firebase再利用・環境分離の設定として保持する
+- `firebase_options.dart` はdev/prodを1ファイルに統合し、`FLAVOR` dart-defineで `DevFirebaseOptions` / `ProdFirebaseOptions` を切り替える
+- `firebase_options.dart`、`google-services.json`、`GoogleService-Info.plist`、`firebase_app_id_file.json`、`apps/mobile_flutter/firebase.json` はローカル生成扱いとし、Gitには含めない
+- Firebase project は dev=`omoumaimise-map-dev`、prod=`omoumaimise-map` を使う
+- Android applicationId / iOS bundle id は dev=`com.inoworl.omoumaimise.dev`、prod=`com.inoworl.omoumaimise` とする
 - Supabase接続境界とFirebase接続境界は混在させず、将来 `packages/supabase_common` と `packages/firebase_common` のように責務を分ける
 
 ## 2.2 リポジトリ構成方針

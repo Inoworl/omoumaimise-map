@@ -26,19 +26,36 @@ tools/                 補助ツール
 
 利用規模が大きくなり、DBコスト、DBブランチ、検証環境、独自APIサーバ運用が主要課題になった段階で NeonDB の移行または併用を再検討します。
 
+Firebase はメインバックエンドではなく、Android App Distribution、Push通知(FCM)、Analytics、Crashlytics、Remote Config のために併用する想定です。Firebaseの実体設定である `firebase_options.dart`、`google-services.json`、`GoogleService-Info.plist`、`firebase_app_id_file.json`、`apps/mobile_flutter/firebase.json` はローカル生成扱いとし、Gitには含めません。
+
+FirebaseアプリID:
+
+| 環境 | Firebase project | Android applicationId | iOS bundle id |
+| --- | --- | --- | --- |
+| dev | `omoumaimise-map-dev` | `com.inoworl.omoumaimise.dev` | `com.inoworl.omoumaimise.dev` |
+| prod | `omoumaimise-map` | `com.inoworl.omoumaimise` | `com.inoworl.omoumaimise` |
+
 ## 開発
 
 Flutterアプリの起動:
 
 ```sh
 cd apps/mobile_flutter
-flutter pub get
-flutter run -d chrome
+fvm flutter pub get
+fvm flutter run -d chrome
+```
+
+dev/prod flavorを指定する場合:
+
+```sh
+cd apps/mobile_flutter
+fvm flutter run --flavor dev --dart-define-from-file=dart_define/dev_dart_define.json
+fvm flutter run --flavor prod --dart-define-from-file=dart_define/prod_dart_define.json
 ```
 
 静的解析:
 
 ```sh
 cd apps/mobile_flutter
-flutter analyze
+fvm flutter analyze
 ```
