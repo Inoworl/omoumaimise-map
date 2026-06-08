@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="jp.keishimizu26629.omoumaimise_map">
+    package="com.inoworl.omoumaimise">
    <application
         android:label="${appName}"
         android:name="${applicationName}"
