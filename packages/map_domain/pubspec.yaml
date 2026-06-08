@@ -1,0 +1,5 @@
+name: map_domain
+publish_to: 'none'
+
+environment:
+  sdk: '>=3.7.0 <4.0.0'

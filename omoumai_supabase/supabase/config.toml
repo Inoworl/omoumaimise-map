@@ -1,0 +1,16 @@
+project_id = "omoumaimise-map"
+
+[api]
+enabled = true
+port = 13321
+
+[db]
+port = 23322
+
+[studio]
+enabled = true
+port = 13323
+
+[inbucket]
+enabled = true
+port = 13324

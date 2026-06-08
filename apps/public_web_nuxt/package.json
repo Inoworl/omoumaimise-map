@@ -1,0 +1,10 @@
+{
+  "name": "public-web-nuxt",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "echo \"Nuxt app is not scaffolded yet\"",
+    "lint": "echo \"No Nuxt lint configured yet\"",
+    "typecheck": "echo \"No Nuxt typecheck configured yet\""
+  }
+}

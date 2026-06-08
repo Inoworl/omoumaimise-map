@@ -5,23 +5,12 @@
 *.swp
 .DS_Store
 .atom/
+.build/
 .buildlog/
 .history
 .svn/
+.swiftpm/
 migrate_working_dir/
-.serena/
-.playwright-mcp/
-
-# Keep FVM version settings in Git, but never commit SDK binaries.
-.fvm/flutter_sdk
-.fvm/versions/
-
-# Firebase client configuration is generated locally and must not be committed.
-**/firebase_options*.dart
-**/google-services.json
-**/GoogleService-Info*.plist
-**/firebase_app_id_file.json
-apps/mobile_flutter/firebase.json
 
 # IntelliJ related
 *.iml
@@ -40,7 +29,6 @@ apps/mobile_flutter/firebase.json
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
-.packages
 .pub-cache/
 .pub/
 /build/

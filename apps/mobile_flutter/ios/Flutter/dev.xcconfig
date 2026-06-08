@@ -1,0 +1,4 @@
+FLUTTER_FLAVOR=dev
+PRODUCT_BUNDLE_IDENTIFIER=com.inoworl.omoumaimise.dev
+DISPLAY_NAME=(d)omoumaimise-map
+FLUTTER_TARGET=lib/main.dart
