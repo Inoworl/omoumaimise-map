@@ -12,6 +12,10 @@ migrate_working_dir/
 .serena/
 .playwright-mcp/
 
+# Supabase local CLI state. Migrations and config stay tracked.
+**/supabase/.branches/
+**/supabase/.temp/
+
 # Keep FVM version settings in Git, but never commit SDK binaries.
 .fvm/flutter_sdk
 .fvm/versions/
