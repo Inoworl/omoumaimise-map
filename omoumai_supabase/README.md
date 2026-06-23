@@ -9,7 +9,8 @@ supabase/
   config.toml          Supabase CLI設定
   migrations/          DB schema、PostGIS、index、RLS policy
   functions/           Edge Functions
-  seed.sql             ローカル開発用データ
+  seed.sql             seed設定の入口メモ
+  seeds/               ローカル開発用seed SQL
   tests/               DB/RLS検証
 scripts/               local/dev/prod操作
 ```
@@ -113,3 +114,29 @@ cd omoumai_supabase
 # packages/ts_common/src/database.types.ts を生成する
 ./scripts/gen-types.sh
 ```
+
+## seed方針
+
+ローカル開発データは `supabase/config.toml` の `[db.seed]` で `supabase/seeds/*.sql` を読み込む構成です。
+
+```text
+supabase/
+  seed.sql
+  seeds/
+    001_shops.sql
+    002_owners.sql
+    003_owner_profiles.sql
+    004_episodes.sql
+    005_shop_relations.sql
+```
+
+`supabase db reset` はmigration適用後にseedを投入します。Firebase Emulatorのimport/exportに近い使い方として、local DBをいつでも同じ初期状態へ戻せます。
+
+```sh
+cd omoumai_supabase
+./scripts/db-reset-local.sh
+```
+
+seedはlocal開発用のモックデータです。dev/prodへは自動投入しません。devでデモデータが必要な場合は、専用scriptを別途追加して明示的に実行します。
+
+現時点ではSQL seedで管理します。店舗データが増えて編集しづらくなった段階で、JSON/CSVを `supabase/seed_data/` に置き、SQLを生成するscriptへ移行します。

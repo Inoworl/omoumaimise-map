@@ -7,6 +7,10 @@ port = 13321
 [db]
 port = 23322
 
+[db.seed]
+enabled = true
+sql_paths = ["./seeds/*.sql"]
+
 [studio]
 enabled = true
 port = 13323
