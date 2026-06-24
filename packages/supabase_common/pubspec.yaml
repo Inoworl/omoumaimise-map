@@ -2,8 +2,18 @@ name: supabase_common
 publish_to: 'none'
 
 environment:
-  sdk: '>=3.7.0 <4.0.0'
+  sdk: '>=3.8.0 <4.0.0'
 
 dependencies:
+  app_common:
+    path: ../app_common
+  freezed_annotation: ^3.1.0
+  json_annotation: ^4.12.0
   map_domain:
     path: ../map_domain
+  supabase: ^2.13.0
+dev_dependencies:
+  build_runner: ^2.15.0
+  freezed: ^4.0.0-dev.3
+  json_serializable: ^6.14.0
+  test: ^1.31.1

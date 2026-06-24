@@ -2,10 +2,10 @@ project_id = "omoumaimise-map"
 
 [api]
 enabled = true
-port = 13321
+port = 13421
 
 [db]
-port = 23322
+port = 23422
 
 [db.seed]
 enabled = true
@@ -13,8 +13,8 @@ sql_paths = ["./seeds/*.sql"]
 
 [studio]
 enabled = true
-port = 13323
+port = 13423
 
 [inbucket]
 enabled = true
-port = 13324
+port = 13424

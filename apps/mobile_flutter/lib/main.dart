@@ -1,21 +1,8 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:omoumaimise_map/app/app.dart';
 
 void main() {
-  runApp(const OmoumaiApp());
-}
-
-class OmoumaiApp extends StatelessWidget {
-  const OmoumaiApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Omoumaimise Map',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
-        useMaterial3: true,
-      ),
-      home: const Scaffold(body: Center(child: Text('Hello world'))),
-    );
-  }
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(const ProviderScope(child: OmoumaiApp()));
 }
