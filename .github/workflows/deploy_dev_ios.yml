@@ -1,0 +1,115 @@
+name: "[Release] Dev iOS"
+
+on:
+  workflow_dispatch:
+    inputs:
+      clean_ios_cache:
+        description: Clean Pods, Podfile.lock, and Xcode DerivedData before building.
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  deploy:
+    runs-on: macos-26
+    timeout-minutes: 60
+    environment: dev
+
+    defaults:
+      run:
+        working-directory: apps/mobile_flutter
+
+    steps:
+      - uses: actions/checkout@v5.0.1
+        with:
+          fetch-depth: 0
+
+      - name: Check Xcode version
+        run: |
+          xcode-select -p
+          xcodebuild -version
+
+      - name: Setup Flutter
+        uses: ./.github/actions/setup-flutter-app
+        with:
+          flutter-cache: "true"
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+
+      - name: Install Fastlane bundle
+        run: |
+          cd ios
+          BUNDLE_PATH=vendor/bundle bundle install
+
+      - name: Restore CocoaPods cache
+        if: ${{ !inputs.clean_ios_cache }}
+        uses: actions/cache@v4
+        with:
+          path: |
+            apps/mobile_flutter/ios/Pods
+            ~/Library/Caches/CocoaPods
+          key: ${{ runner.os }}-omoumaimise-pods-${{ hashFiles('apps/mobile_flutter/ios/Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-omoumaimise-pods-
+
+      - name: Restore Firebase config files
+        run: |
+          mkdir -p ios/Runner/Firebase/Dev
+          echo "${{ secrets.DEV_GOOGLESERVICE_INFO_PLIST_BASE64 }}" | base64 -d > ios/Runner/Firebase/Dev/GoogleService-Info.plist
+          cp ios/Runner/Firebase/Dev/GoogleService-Info.plist ios/Runner/GoogleService-Info.plist
+          echo "${{ secrets.DEV_FIREBASE_OPTIONS_DART_BASE64 }}" | base64 -d > lib/firebase_options.dart
+
+      - name: Restore dart-define config
+        run: |
+          mkdir -p dart_define
+          echo "${{ secrets.DEV_DART_DEFINE_JSON_BASE64 }}" | base64 -d > dart_define/dev_dart_define.json
+
+      - name: Prepare iOS build cache
+        run: |
+          cd ios
+          if [ "${{ inputs.clean_ios_cache }}" = "true" ]; then
+            rm -rf Pods Podfile.lock build
+            rm -rf ~/Library/Developer/Xcode/DerivedData/*
+          else
+            rm -rf build
+          fi
+
+      - name: Deploy to TestFlight with fastlane
+        env:
+          CERT_PWD: ${{ secrets.CERT_PWD }}
+          IOS_CERTIFICATE_BASE64: ${{ secrets.IOS_CERTIFICATE_BASE64 }}
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          ASC_API_KEY_BASE64: ${{ secrets.ASC_API_KEY_BASE64 }}
+          DEV_BUNDLE_ID: ${{ secrets.DEV_BUNDLE_ID }}
+          DEV_PROVISIONING_PROFILE_NAME: ${{ secrets.DEV_PROVISIONING_PROFILE_NAME }}
+          PROVISIONING_PROFILE_BASE64: ${{ secrets.DEV_PROVISIONING_PROFILE_BASE64 }}
+          DEVELOPMENT_TEAM: ${{ secrets.DEVELOPMENT_TEAM }}
+          IPA_OUTPUT_NAME: ${{ secrets.IPA_OUTPUT_NAME }}
+          FASTLANE_DISABLE_PTY: "1"
+          FASTLANE_EXPLICIT_OPEN3: "1"
+          FASTLANE_DISABLE_COLORS: "1"
+          CI: "1"
+        run: |
+          cd ios
+          BUNDLE_PATH=vendor/bundle bundle exec fastlane dev
+
+      - name: Debug build settings on failure
+        if: failure()
+        run: |
+          cd ios
+          xcodebuild -showBuildSettings -workspace Runner.xcworkspace -scheme dev -configuration Release-dev | tail -n 80 || true
+          tail -n 200 /Users/runner/Library/Logs/gym/Runner-dev.log || true
+
+      - name: Upload build logs
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-build-logs-${{ github.run_id }}
+          path: |
+            /Users/runner/Library/Logs/gym/*.log
+            apps/mobile_flutter/ios/build/logs/
+          retention-days: 7
