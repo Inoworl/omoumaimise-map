@@ -13,7 +13,7 @@ Flutter-only CI does not require Docker. Supabase local development still uses S
 
 Android dev deploy intentionally uses Firebase App Distribution first. It does not require a Google Play Console app. Add Google Play internal testing only after the `com.inoworl.omoumaimise.dev` app exists in Google Play Console.
 
-iOS dev deploy uses TestFlight, so the `com.inoworl.omoumaimise.dev` app must exist in App Store Connect before running the workflow. The workflow is manual-only until App Store Connect setup, signing assets, and GitHub Actions secrets are complete.
+iOS dev deploy uses TestFlight only. Do not use Firebase App Distribution for iOS in the initial release pipeline. The `com.inoworl.omoumaimise.dev` app must exist in App Store Connect before running the workflow. The workflow is manual-only until App Store Connect setup, signing assets, and GitHub Actions secrets are complete.
 
 ## Console ownership
 
@@ -32,7 +32,8 @@ Checked on 2026-06-25.
 | Firebase dev project | Done | `omoumaimise-map-dev` is accessible from `g.g.rereagirx84@gmail.com` |
 | Firebase Android app | Done | Registered as `com.inoworl.omoumaimise.dev` |
 | Firebase iOS app | Done | Registered as `com.inoworl.omoumaimise.dev` |
-| Firebase App Distribution | Not started | Android and iOS App Distribution pages still show the onboarding `Start` action |
+| Firebase App Distribution for Android | Done | Android onboarding is complete and the `internal-testers` group exists |
+| Firebase App Distribution for iOS | Not used | iOS dev distribution uses TestFlight instead |
 | Firebase Cloud Messaging for Android | Ready for Firebase app registration | Android app is registered; client-side notification handling is still separate app work |
 | Firebase APNs for iOS | Missing | APNs auth keys and APNs certificates are not uploaded for development or production |
 | Google Play Console dev app | Missing | `com.inoworl.omoumaimise.dev` is not yet listed under Inoworl |
@@ -44,23 +45,25 @@ Workflow: `.github/workflows/deploy_dev_android.yml`
 
 The workflow builds the `dev` flavor APK from `apps/mobile_flutter` and distributes it to Firebase App Distribution.
 
+Firebase App Distribution is enabled for the Android dev app. The default distribution group is `internal-testers`.
+
 Required GitHub Actions environment: `dev`
 
 Required secrets:
 
 | Secret | Purpose |
 | --- | --- |
-| `DEV_GOOGLE_SERVICES_JSON_BASE64` | Base64 encoded `android/app/src/dev/google-services.json` |
-| `DEV_FIREBASE_OPTIONS_DART_BASE64` | Base64 encoded `lib/firebase_options.dart` |
-| `DEV_DART_DEFINE_JSON_BASE64` | Base64 encoded `dart_define/dev_dart_define.json` |
+| `DEV_GOOGLE_SERVICES_JSON_BASE64` | Base64 encoded `android/app/src/dev/google-services.json`. Registered in the `dev` environment |
+| `DEV_FIREBASE_OPTIONS_DART_BASE64` | Base64 encoded `lib/firebase_options.dart`. Registered in the `dev` environment |
+| `DEV_DART_DEFINE_JSON_BASE64` | Base64 encoded `dart_define/dev_dart_define.json`. Registered in the `dev` environment |
 | `ANDROID_UPLOAD_KEYSTORE_JKS_BASE64` | Base64 encoded Android upload keystore |
 | `ANDROID_UPLOAD_KEYSTORE_PASSWORD` | Android keystore password |
 | `ANDROID_UPLOAD_KEY_ALIAS` | Android key alias |
 | `ANDROID_UPLOAD_KEY_PASSWORD` | Android key password |
 | `DEV_FIREBASE_SERVICE_ACCOUNT_KEY_BASE64` | Base64 encoded Firebase service account JSON |
-| `DEV_FIREBASE_PROJECT_ID` | Firebase dev project ID |
-| `DEV_FIREBASE_ANDROID_APP_ID` | Firebase Android app ID |
-| `DEV_FIREBASE_APP_DISTRIBUTION_GROUPS` | Firebase App Distribution groups. Defaults to `internal-testers` when empty |
+| `DEV_FIREBASE_PROJECT_ID` | Firebase dev project ID. Registered in the `dev` environment |
+| `DEV_FIREBASE_ANDROID_APP_ID` | Firebase Android app ID. Registered in the `dev` environment |
+| `DEV_FIREBASE_APP_DISTRIBUTION_GROUPS` | Firebase App Distribution groups. Registered as `internal-testers` in the `dev` environment |
 
 Expected dev package name: `com.inoworl.omoumaimise.dev`
 
